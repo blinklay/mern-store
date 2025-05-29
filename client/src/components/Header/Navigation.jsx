@@ -19,7 +19,7 @@ export default function Navigation({ user }) {
           to="/profile"
           className="text-black font-semibold hover:underline"
         >
-          {user.name}
+          {user.email}
         </Link>
       ) : (
         <Link

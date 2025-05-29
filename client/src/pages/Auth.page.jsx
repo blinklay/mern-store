@@ -2,23 +2,43 @@ import { useState } from "react";
 import AuthForm from "../components/Auth/Authform";
 import AuthError from "../components/Auth/AuthError";
 import AuthHeader from "../components/Auth/AuthHeader";
+import axiosInstance from "../axios";
+import { useDispatch } from "react-redux";
+import { fetchUser } from "../redux/actions/fetchUser.action";
+import { handleAxiosError } from "../utils/handleAxiosError";
 
-const isLoading = false;
-const error = null;
+const initialFormData = {
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 export default function AuthPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
   const [mode, setMode] = useState("login");
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [form, setForm] = useState(initialFormData);
 
-  const onSubmit = (formData, mode) => {
-    if (mode === "login") {
-      console.log("login requset:", formData);
-    } else {
-      console.log("register request:", formData);
+  function clearForm() {
+    setForm(initialFormData);
+  }
+
+  const onSubmit = async (formData, mode) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await axiosInstance.post(`/auth/${mode}`, formData);
+      if (!res.data.user) {
+        dispatch(fetchUser());
+      } else {
+        setMode("login");
+      }
+      clearForm();
+    } catch (err) {
+      setError(handleAxiosError(err));
+    } finally {
+      setIsLoading(false);
     }
   };
 
