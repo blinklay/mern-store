@@ -13,6 +13,7 @@ app.use(cors({
   credentials: true
 }))
 app.use("/api", router)
+app.use("/images", express.static("images"));
 
 const start = async () => {
   try {

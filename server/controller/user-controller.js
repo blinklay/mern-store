@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/user-model");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const productModel = require("../models/product-model");
 
 class UserController {
   async register(req, res) {
@@ -79,6 +80,59 @@ class UserController {
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Не удалось выполнить запрос!" })
+    }
+  }
+  async addToCart(req, res) {
+    try {
+      const { productId } = req.params;
+      const product = await productModel.findById(productId)
+
+      if (!product) {
+        return res.status(404).json({ message: "Товар не найден!" })
+      }
+
+      const user = await userModel.findById(req.userId)
+      const cartItem = user.cart.find((item) => item.product.toString() === productId)
+
+      if (cartItem) {
+        cartItem.quantity += 1
+      } else {
+        user.cart.push({ product: productId, quantity: 1 })
+      }
+
+      await user.save()
+      res.status(200).json({ message: "Корзина обновлена!", cart: user.cart })
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Не удалось добавить товар в корзину!" })
+    }
+  }
+  async removeFromCart(req, res) {
+    try {
+      const { productId } = req.params;
+      const userId = req.userId;
+
+      const product = await productModel.findById(productId)
+      if (!product) return res.status(404).json({ message: "Товар не найден!" })
+
+      const user = await userModel.findById(userId)
+      const cartItem = user.cart.find(item => item.product.toString() === productId)
+
+      if (!cartItem) {
+        return res.status(404).json({ message: "Товара нет в корзине!" })
+      }
+
+      if (cartItem.quantity > 1) {
+        cartItem.quantity -= 1
+      } else {
+        user.cart = user.cart.filter(item => item.product.toString() !== productId)
+      }
+
+      await user.save()
+      res.status(200).json({ message: "Корзина обновлена!", cart: user.cart })
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Не удалось обработать запрос!" })
     }
   }
 }
