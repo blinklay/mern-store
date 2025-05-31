@@ -15,10 +15,7 @@ export default function Navigation({ user }) {
 
       {/* User Section */}
       {user ? (
-        <Link
-          to="/profile"
-          className="text-black font-semibold hover:underline"
-        >
+        <Link to="/user" className="text-black font-semibold hover:underline">
           {user.email}
         </Link>
       ) : (

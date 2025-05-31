@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./redux/actions/fetchUser.action";
 import CatalogPage from "./pages/Catalog.page";
+import UserPage from "./pages/User.page";
+import PrivateRoute from "./utils/PrivateRoute";
 
 export default function App() {
   const user = useSelector((state) => state.user.user);
@@ -28,6 +30,14 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/catalog" element={<CatalogPage />} />
+        <Route
+          path="/user"
+          element={
+            <PrivateRoute>
+              <UserPage />
+            </PrivateRoute>
+          }
+        />
       </Route>
     </Routes>
   );
