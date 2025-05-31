@@ -6,7 +6,7 @@ export default function Navigation({ user }) {
       <Link to="/" className="hover:text-gray-700 transition">
         Главная
       </Link>
-      <Link to="/products" className="hover:text-gray-700 transition">
+      <Link to="/catalog" className="hover:text-gray-700 transition">
         Каталог
       </Link>
       <Link to="/cart" className="hover:text-gray-700 transition">

@@ -5,6 +5,7 @@ import AuthPage from "./pages/Auth.page";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./redux/actions/fetchUser.action";
+import CatalogPage from "./pages/Catalog.page";
 
 export default function App() {
   const user = useSelector((state) => state.user.user);
@@ -26,6 +27,7 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/catalog" element={<CatalogPage />} />
       </Route>
     </Routes>
   );
