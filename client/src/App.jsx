@@ -8,6 +8,7 @@ import { fetchUser } from "./redux/actions/fetchUser.action";
 import CatalogPage from "./pages/Catalog.page";
 import UserPage from "./pages/User.page";
 import PrivateRoute from "./utils/PrivateRoute";
+import CartPage from "./pages/Cart.page";
 
 export default function App() {
   const user = useSelector((state) => state.user.user);
@@ -35,6 +36,14 @@ export default function App() {
           element={
             <PrivateRoute>
               <UserPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <PrivateRoute>
+              <CartPage />
             </PrivateRoute>
           }
         />
