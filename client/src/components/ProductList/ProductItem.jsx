@@ -1,3 +1,5 @@
+import CartButton from "./CartButton";
+
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 function truncateText(text, maxLength) {
@@ -6,6 +8,7 @@ function truncateText(text, maxLength) {
 }
 
 export default function ProductCard({
+  _id,
   name,
   brand,
   category,
@@ -16,14 +19,14 @@ export default function ProductCard({
   rating,
 }) {
   return (
-    <div className="max-w-sm rounded-2xl overflow-hidden shadow-lg p-4 bg-white transition hover:shadow-xl">
+    <div className="max-w-sm rounded-2xl overflow-hidden shadow-lg p-4 bg-white transition hover:shadow-xl flex flex-col jsutify-between gap-3">
       <img
         src={baseUrl + imageUrl}
         alt={name}
         className="w-full h-60 object-cover rounded-xl"
       />
 
-      <div className="mt-4">
+      <div>
         <h2 className="text-xl font-semibold text-gray-800">{name}</h2>
         <p className="text-sm text-gray-500 mb-1">Бренд: {brand}</p>
         {category?.name && (
@@ -55,6 +58,8 @@ export default function ProductCard({
           </span>
         </div>
       </div>
+
+      <CartButton id={_id} />
     </div>
   );
 }

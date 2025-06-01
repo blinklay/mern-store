@@ -16,8 +16,6 @@ export default function UserPage() {
     }
   }, [data]);
 
-  if (!user) return <p>Пользователь не найден</p>;
-
   const handleLogout = () => {
     postData("/auth/logout");
   };

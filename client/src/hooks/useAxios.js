@@ -24,6 +24,7 @@ export function useAxios(initialData) {
 
   const getData = (url) => request("get", url)
   const postData = (url, data) => request("post", url, data)
+  const deleteData = (url) => request("delete", url)
 
-  return { getData, postData, loading, error, data }
+  return { getData, postData, deleteData, loading, error, data }
 }
