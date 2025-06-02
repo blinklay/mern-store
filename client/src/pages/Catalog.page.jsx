@@ -32,12 +32,12 @@ export default function CatalogPage() {
     "filter",
     defaultFilterSetting
   );
-  const categories = data.products.map((item) => item.category.name);
+  const categories = data.products.map((item) => item.category);
   const brands = data.products.map((item) => item.brand);
 
   useEffect(() => {
     getData(
-      `/products?sort=${sort}&brand=${filterSettings.brand}&category=${filterSettings.categoty}`
+      `/products?sort=${sort}&brand=${filterSettings.brand}&category=${filterSettings.category}`
     );
   }, [sort, filterSettings]);
 
@@ -49,7 +49,7 @@ export default function CatalogPage() {
       <div className="mt-5">
         <CatalogSort setSort={setSort} options={sortOptions} sort={sort} />
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 items-start">
           <Sidebar
             categories={categories}
             brands={brands}

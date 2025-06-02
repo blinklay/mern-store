@@ -29,10 +29,8 @@ export default function ProductCard({
       <div>
         <h2 className="text-xl font-semibold text-gray-800">{name}</h2>
         <p className="text-sm text-gray-500 mb-1">Бренд: {brand}</p>
-        {category?.name && (
-          <p className="text-sm text-gray-500 mb-1">
-            Категория: {category.name}
-          </p>
+        {category && (
+          <p className="text-sm text-gray-500 mb-1">Категория: {category}</p>
         )}
         <p className="text-base text-gray-800 font-medium mb-2">
           Цена: {price} ₽

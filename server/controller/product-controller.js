@@ -1,5 +1,4 @@
 const productModel = require("../models/product-model");
-require("../models/category-model");
 
 const sortQueries = {
   "price_abs": { price: 1 },
@@ -14,11 +13,15 @@ class ProductController {
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 10
       const skip = (page - 1) * limit
-      const { sort } = req.query
+      const { sort, brand, category } = req.query
+
+      const filter = {}
+      if (brand !== "null") filter.brand = brand;
+      if (category !== "null") filter.category = category;
 
       const total = await productModel.countDocuments()
 
-      const products = await productModel.find()
+      const products = await productModel.find(filter)
         .skip(skip)
         .limit(limit)
         .populate("category")
