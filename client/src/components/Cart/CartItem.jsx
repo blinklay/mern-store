@@ -1,7 +1,20 @@
+import useCart from "../../hooks/useCart";
+
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export default function CartItem({ item }) {
   const { product, quantity } = item;
+  const {
+    increaseToCart,
+    decreaseFromCart,
+    removeFromCart,
+    cartLoading,
+    cartError,
+  } = useCart();
+
+  if (cartError) {
+    // error listener
+  }
   return (
     <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow mb-4">
       <div className="flex items-center space-x-4">
@@ -17,17 +30,23 @@ export default function CartItem({ item }) {
             Цена: <span className="font-medium">{product.price} ₽</span>
           </p>
 
-          <div className="flex items-center gap-2 mt-2">
+          <div
+            className={`flex items-center gap-2 mt-2 opacity-[${
+              cartLoading ? "0.5" : "1"
+            }]`}
+          >
             <button
+              disabled={cartLoading}
               className="w-8 h-8 bg-gray-200 rounded hover:bg-gray-300 text-lg font-semibold"
-              // onClick={() => handleDecrease(product._id)}
+              onClick={() => decreaseFromCart(product._id)}
             >
               −
             </button>
             <span className="text-base font-medium">{quantity}</span>
             <button
+              disabled={cartLoading}
               className="w-8 h-8 bg-gray-200 rounded hover:bg-gray-300 text-lg font-semibold"
-              // onClick={() => handleIncrease(product._id)}
+              onClick={() => increaseToCart(product._id)}
             >
               +
             </button>
@@ -41,7 +60,13 @@ export default function CartItem({ item }) {
             {product.price * quantity} ₽
           </p>
         </div>
-        <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+        <button
+          disabled={cartLoading}
+          onClick={() => removeFromCart(product._id)}
+          className={`bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded opacity-[${
+            cartLoading ? "0.5" : "1"
+          }]`}
+        >
           Удалить
         </button>
       </div>

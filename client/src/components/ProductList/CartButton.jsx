@@ -1,43 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useAxios } from "../../hooks/useAxios";
 import { useEffect } from "react";
-import { fetchUser } from "../../redux/actions/fetchUser.action";
+import useCart from "../../hooks/useCart";
 
 export default function CartButton({ id }) {
   const isAuth = useSelector((state) => state.user.isAuth);
-  const cart = useSelector((state) => state.user?.user?.cart);
-  const dispatch = useDispatch();
-
-  const {
-    deleteData: removeCart,
-    data: removeCartResponse,
-    loading: removeCartLoading,
-    error: removeCartError,
-  } = useAxios();
-
-  const {
-    postData: postCart,
-    data: addCartResponse,
-    loading: addCartLoading,
-    error: addCartError,
-  } = useAxios();
-
-  function addToCart() {
-    postCart(`/cart/${id}`);
-  }
-
-  function removeFromCart() {
-    removeCart(`/cart/${id}`);
-  }
-
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, [addCartResponse, removeCartResponse]);
+  const { cart, cartError, cartLoading, increaseToCart, decreaseFromCart } =
+    useCart();
 
   useEffect(() => {
     // .. error listener .. //
-  }, [addCartError, removeCartError]);
+  }, [cartError]);
 
   if (!isAuth) {
     return (
@@ -51,26 +24,26 @@ export default function CartButton({ id }) {
   }
 
   if (cart) {
-    const inCart = cart.find((item) => item.product._id.toString() === id);
+    const inCart = cart.find((item) => item.product._id === id);
 
     if (inCart) {
       return (
         <div
           className={`flex items-center justify-between border rounded-lg px-3 py-2 w-full opacity-[${
-            addCartLoading || removeCartLoading ? "0.5" : 1
+            cartLoading ? "0.5" : 1
           }]`}
         >
           <button
-            onClick={removeFromCart}
+            onClick={() => decreaseFromCart(id)}
             className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-            disabled={addCartLoading || removeCartLoading}
+            disabled={cartLoading}
           >
             −
           </button>
           <span className="text-lg font-medium">{inCart.quantity}</span>
           <button
-            disabled={addCartLoading || removeCartLoading}
-            onClick={addToCart}
+            disabled={cartLoading}
+            onClick={() => increaseToCart(id)}
             className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
           >
             +
@@ -82,7 +55,7 @@ export default function CartButton({ id }) {
 
   return (
     <button
-      onClick={addToCart}
+      onClick={() => increaseToCart(id)}
       className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
     >
       Добавить в корзину
