@@ -1,5 +1,12 @@
 import { useSelector } from "react-redux";
 import CartList from "../components/Cart/CartList";
+import CartTotal from "../components/Cart/CartTotal";
+
+function calculatePrice(cart) {
+  return cart.reduce((sum, item) => {
+    return sum + item.product.price * item.quantity;
+  }, 0);
+}
 
 export default function CartPage() {
   const cart = useSelector((state) => state.user.user.cart);
@@ -14,9 +21,16 @@ export default function CartPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 px-4">
+    <div className="mt-10">
       <h2 className="text-2xl font-bold mb-6">Ваша корзина</h2>
-      <CartList items={cart} />
+
+      <div className="flex gap-4 w-full justify-between">
+        <CartList items={cart} />
+        <CartTotal
+          countProducts={cart.length}
+          totalPrice={calculatePrice(cart)}
+        />
+      </div>
     </div>
   );
 }
