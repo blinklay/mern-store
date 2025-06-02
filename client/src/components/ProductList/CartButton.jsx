@@ -51,23 +51,25 @@ export default function CartButton({ id }) {
   }
 
   if (cart) {
-    const inCart = cart.find((item) => item.product.toString() === id);
+    const inCart = cart.find((item) => item.product._id.toString() === id);
 
     if (inCart) {
       return (
         <div
           className={`flex items-center justify-between border rounded-lg px-3 py-2 w-full opacity-[${
-            addCartLoading || removeCartLoading ? "0.5" : "1"
+            addCartLoading || removeCartLoading ? "0.5" : 1
           }]`}
         >
           <button
             onClick={removeFromCart}
             className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+            disabled={addCartLoading || removeCartLoading}
           >
             −
           </button>
           <span className="text-lg font-medium">{inCart.quantity}</span>
           <button
+            disabled={addCartLoading || removeCartLoading}
             onClick={addToCart}
             className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
           >

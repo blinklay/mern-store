@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import ProductList from "../components/ProductList/ProductList";
+import CartList from "../components/Cart/CartList";
 
 export default function CartPage() {
-  const cart = useSelector((state) => state.user.cart);
+  const cart = useSelector((state) => state.user.user.cart);
 
   if (!cart || cart.length === 0) {
     return (
@@ -16,7 +16,7 @@ export default function CartPage() {
   return (
     <div className="max-w-3xl mx-auto mt-10 px-4">
       <h2 className="text-2xl font-bold mb-6">Ваша корзина</h2>
-      <ProductList items={cart} />
+      <CartList items={cart} />
     </div>
   );
 }

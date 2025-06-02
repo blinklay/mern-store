@@ -3,6 +3,10 @@ const userModel = require("../models/user-model");
 const bcrypt = require("bcrypt");
 const productModel = require("../models/product-model");
 
+function deletefromCart(user, productId) {
+  return user.cart.filter(item => item.product.toString() !== productId)
+}
+
 class UserController {
   async register(req, res) {
     try {
@@ -70,7 +74,7 @@ class UserController {
   async getSelf(req, res) {
     try {
       const userId = req.userId;
-      const user = await userModel.findById(userId).select("-password")
+      const user = await userModel.findById(userId).select("-password").populate("cart.product")
 
       if (!user) {
         return res.status(404).json({ message: "Пользователь не найден!" })
@@ -110,6 +114,7 @@ class UserController {
   async removeFromCart(req, res) {
     try {
       const { productId } = req.params;
+      const { force } = req.query
       const userId = req.userId;
 
       const product = await productModel.findById(productId)
@@ -122,10 +127,14 @@ class UserController {
         return res.status(404).json({ message: "Товара нет в корзине!" })
       }
 
-      if (cartItem.quantity > 1) {
-        cartItem.quantity -= 1
+      if (force === 'true') {
+        user.cart = deletefromCart(user, productId)
       } else {
-        user.cart = user.cart.filter(item => item.product.toString() !== productId)
+        if (cartItem.quantity > 1) {
+          cartItem.quantity -= 1
+        } else {
+          user.cart = deletefromCart(user, productId)
+        }
       }
 
       await user.save()
