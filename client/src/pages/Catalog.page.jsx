@@ -16,8 +16,8 @@ const initialData = {
 const sortOptions = [
   { value: "price_abs", label: "Цена (возв.)" },
   { value: "price_desc", label: "Цена (убыв.)" },
-  { value: "rate_desc", label: "Оценка (убыв.)" },
-  { value: "rate_abs", label: "Оценка (возв.)" },
+  { value: "rating_desc", label: "Оценка (убыв.)" },
+  { value: "rating_abs", label: "Оценка (возв.)" },
 ];
 
 const defaultFilterSetting = {
@@ -32,12 +32,12 @@ export default function CatalogPage() {
     "filter",
     defaultFilterSetting
   );
-  const categories = data.products.map((item) => item.category);
-  const brands = data.products.map((item) => item.brand);
+  const categories = [...new Set(data.products.map((item) => item.category))];
+  const brands = [...new Set(data.products.map((item) => item.brand))];
 
   useEffect(() => {
     getData(
-      `/products?sort=${sort}&brand=${filterSettings.brand}&category=${filterSettings.category}`
+      `/products?sort=${sort.value}&brand=${filterSettings.brand}&category=${filterSettings.category}`
     );
   }, [sort, filterSettings]);
 

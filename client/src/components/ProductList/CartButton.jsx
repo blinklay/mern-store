@@ -16,7 +16,7 @@ export default function CartButton({ id }) {
     return (
       <Link
         to="/auth"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-center"
       >
         Добавить в корзину
       </Link>
@@ -56,7 +56,7 @@ export default function CartButton({ id }) {
   return (
     <button
       onClick={() => increaseToCart(id)}
-      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
+      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-center"
     >
       Добавить в корзину
     </button>

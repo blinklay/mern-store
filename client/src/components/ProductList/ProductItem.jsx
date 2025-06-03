@@ -19,7 +19,7 @@ export default function ProductCard({
   rating,
 }) {
   return (
-    <div className="max-w-sm rounded-2xl overflow-hidden shadow-lg p-4 bg-white transition hover:shadow-xl flex flex-col jsutify-between gap-3">
+    <div className="max-w-sm rounded-2xl overflow-hidden shadow-lg p-4 bg-white transition hover:shadow-xl flex flex-col justify-between gap-3">
       <img
         src={baseUrl + imageUrl}
         alt={name}
@@ -27,7 +27,9 @@ export default function ProductCard({
       />
 
       <div>
-        <h2 className="text-xl font-semibold text-gray-800">{name}</h2>
+        <h2 className="text-xl font-semibold text-gray-800">
+          {truncateText(name, 20)}
+        </h2>
         <p className="text-sm text-gray-500 mb-1">Бренд: {brand}</p>
         {category && (
           <p className="text-sm text-gray-500 mb-1">Категория: {category}</p>
