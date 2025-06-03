@@ -37,7 +37,17 @@ const productSchema = new Schema(
       default: 0,
       min: 0,
       max: 5,
-    }
+    },
+    reviews: [
+      {
+        user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        name: String,
+        rating: { type: Number, required: true, min: 1, max: 5 },
+        comment: String,
+        createdAt: { type: Date, default: Date.now },
+      },
+    ]
+
   },
   {
     timestamps: true,
