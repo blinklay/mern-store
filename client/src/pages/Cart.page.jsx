@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import CartList from "../components/Cart/CartList";
 import CartTotal from "../components/Cart/CartTotal";
+import useHelmet from "../hooks/useHelmet";
 
 function calculatePrice(cart) {
   return cart.reduce((sum, item) => {
@@ -9,6 +10,8 @@ function calculatePrice(cart) {
 }
 
 export default function CartPage() {
+  useHelmet("Корзина");
+
   const cart = useSelector((state) => state.user.user.cart);
 
   if (!cart || cart.length === 0) {

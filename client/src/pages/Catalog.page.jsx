@@ -6,6 +6,7 @@ import ErrorMessage from "../components/Catalog/ErrorMessage";
 import CatalogSort from "../components/Catalog/CatalogSort/CatalogSort";
 import useLocalStorage from "../hooks/useLoadlStorage";
 import Sidebar from "../components/Catalog/Sidebar";
+import useHelmet from "../hooks/useHelmet";
 
 const initialData = {
   page: 1,
@@ -26,6 +27,8 @@ const defaultFilterSetting = {
 };
 
 export default function CatalogPage() {
+  useHelmet("Каталог");
+
   const { data, loading, error, getData } = useAxios(initialData);
   const [sort, setSort] = useLocalStorage("sort", sortOptions[0]);
   const [filterSettings, setFilterSetting] = useLocalStorage(

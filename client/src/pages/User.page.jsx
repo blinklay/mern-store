@@ -4,8 +4,11 @@ import { useAxios } from "../hooks/useAxios";
 import { UserAddress } from "../components/User/UserAddress";
 import { LogoutButton } from "../components/User/LogoutButton";
 import { UserAvatar } from "../components/User/UserAvatar";
+import useHelmet from "../hooks/useHelmet";
 
 export default function UserPage() {
+  useHelmet("Профиль");
+
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const { postData, data } = useAxios();

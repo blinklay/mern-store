@@ -6,6 +6,7 @@ import axiosInstance from "../axios";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../redux/actions/fetchUser.action";
 import { handleAxiosError } from "../utils/handleAxiosError";
+import useHelmet from "../hooks/useHelmet";
 
 const initialFormData = {
   email: "",
@@ -14,6 +15,8 @@ const initialFormData = {
 };
 
 export default function AuthPage() {
+  useHelmet("Авторизация");
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
