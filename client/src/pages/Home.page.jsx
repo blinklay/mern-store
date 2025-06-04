@@ -4,6 +4,10 @@ import { useAxios } from "../hooks/useAxios";
 import useHelmet from "../hooks/useHelmet";
 import Slider from "../components/Slider/Slider";
 import { Link } from "react-router-dom";
+import Loader from "../components/Catalog/Loader";
+import DeliverySteps from "../components/DeliverySteps/DeliverySteps";
+import SubscribeForm from "../components/SubscribeForm/SubscribeForm";
+import PromoSection from "../components/PromoSection/PromoSection";
 
 export default function HomePage() {
   useHelmet("Главная");
@@ -11,14 +15,14 @@ export default function HomePage() {
   const {
     data: elGuitars,
     getData: getElGuitars,
-    // loading: loadingElGuitars,
+    loading: loadingElGuitars,
     // error: errorElGuitars,
   } = useAxios();
 
   const {
     data: brandGuitars,
     getData: getBrandGuitars,
-    // loading: loadingBrandGuitars,
+    loading: loadingBrandGuitars,
     // error: errorBrandGuitars,
   } = useAxios();
 
@@ -27,23 +31,33 @@ export default function HomePage() {
     getBrandGuitars("/products/?brand=Ibanez&category=null");
   }, []);
 
-  console.log(brandGuitars);
-
   return (
-    <div>
+    <div className="flex flex-col gap-10">
       <Greeting />
 
       <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-3">
-          <h3 className="text-2xl font-medium">Электрогитары</h3>
-          <div>{elGuitars && <Slider items={elGuitars.products} />}</div>
-        </div>
+        {loadingElGuitars && <Loader />}
+        {!loadingElGuitars && (
+          <div className="flex flex-col gap-3">
+            <h3 className="text-2xl font-medium">Электрогитары</h3>
+            <div>{elGuitars && <Slider items={elGuitars.products} />}</div>
+          </div>
+        )}
 
-        <div className="flex flex-col gap-3">
-          <h3 className="text-2xl font-medium">Гитары Ibanez</h3>
-          <div>{brandGuitars && <Slider items={brandGuitars.products} />}</div>
-        </div>
+        {loadingBrandGuitars && <Loader />}
+        {!loadingBrandGuitars && (
+          <div className="flex flex-col gap-3">
+            <h3 className="text-2xl font-medium">Гитары Ibanez</h3>
+            <div>
+              {brandGuitars && <Slider items={brandGuitars.products} />}
+            </div>
+          </div>
+        )}
       </div>
+
+      <DeliverySteps />
+      <PromoSection />
+      <SubscribeForm />
     </div>
   );
 }

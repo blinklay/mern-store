@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header className="bg-white shadow-sm px-4 py-3 flex items-center justify-between">
       <Link to="/" className="text-xl font-bold text-black">
-        GuitarShop
+        <img src="/logo.png" alt="Logo" className="max-w-[100px]" />
       </Link>
 
       <Navigation user={user} />

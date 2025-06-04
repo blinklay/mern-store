@@ -25,7 +25,7 @@ export default function ProductCard({
         <img
           src={baseUrl + imageUrl}
           alt={name}
-          className="w-full h-60 object-cover rounded-xl"
+          className="w-full h-60 object-contain rounded-xl"
         />
       </Link>
 

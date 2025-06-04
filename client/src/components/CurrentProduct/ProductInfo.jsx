@@ -20,7 +20,9 @@ export default function ProductInfo({
       <p className="text-2xl font-bold mb-4">{price} ₽</p>
       <p className="text-gray-800 mb-6">{description}</p>
 
-      <CartButton id={id} />
+      <div className="max-w-[200px]">
+        <CartButton id={id} />
+      </div>
     </div>
   );
 }

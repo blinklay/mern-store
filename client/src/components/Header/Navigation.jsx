@@ -21,7 +21,7 @@ export default function Navigation({ user }) {
       ) : (
         <Link
           to="/auth"
-          className="px-3 py-1 border rounded text-sm hover:bg-gray-100 transition"
+          className="px-3 py-1 border rounded text-sm hover:bg-gray-100 transition bg-blue-600 text-white"
         >
           Войти
         </Link>

@@ -37,7 +37,7 @@ export default function Slider({ items }) {
                 {item.name}
               </Link>
               <p className="text-sm text-gray-500 mb-1">{item.brand}</p>
-              <p className="text-green-600 font-bold">{item.price} ₽</p>
+              <p className="text-blue-600 font-bold">{item.price} ₽</p>
             </div>
           </div>
         </SwiperSlide>
