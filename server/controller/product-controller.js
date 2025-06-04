@@ -37,6 +37,21 @@ class ProductController {
       res.status(500).json({ message: "Не удалось обработать запрос!" })
     }
   }
+  async getCurrentProduct(req, res) {
+    try {
+      const { productId } = req.params
+      const product = await productModel.findById(productId)
+
+      if (!product) {
+        return res.status(404).json({ message: "Товар не найден!" })
+      }
+
+      res.status(200).json({ product })
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Не удалось обработать запрос!" })
+    }
+  }
 }
 
 module.exports = new ProductController()

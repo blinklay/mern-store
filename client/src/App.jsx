@@ -9,6 +9,7 @@ import CatalogPage from "./pages/Catalog.page";
 import UserPage from "./pages/User.page";
 import PrivateRoute from "./utils/PrivateRoute";
 import CartPage from "./pages/Cart.page";
+import CurrentProductPage from "./pages/CurrentProduct.page";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ export default function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/catalog/:productId" element={<CurrentProductPage />} />
       </Route>
     </Routes>
   );

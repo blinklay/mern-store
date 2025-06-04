@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import CartButton from "./CartButton";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -20,16 +21,21 @@ export default function ProductCard({
 }) {
   return (
     <div className="max-w-sm rounded-2xl overflow-hidden shadow-lg p-4 bg-white transition hover:shadow-xl flex flex-col justify-between gap-3">
-      <img
-        src={baseUrl + imageUrl}
-        alt={name}
-        className="w-full h-60 object-cover rounded-xl"
-      />
+      <Link to={`/catalog/${_id}`}>
+        <img
+          src={baseUrl + imageUrl}
+          alt={name}
+          className="w-full h-60 object-cover rounded-xl"
+        />
+      </Link>
 
       <div>
-        <h2 className="text-xl font-semibold text-gray-800">
+        <Link
+          to={`/catalog/${_id}`}
+          className="text-xl font-semibold text-gray-800"
+        >
           {truncateText(name, 20)}
-        </h2>
+        </Link>
         <p className="text-sm text-gray-500 mb-1">Бренд: {brand}</p>
         {category && (
           <p className="text-sm text-gray-500 mb-1">Категория: {category}</p>

@@ -27,7 +27,7 @@ export default function CartPage() {
     <div className="mt-10">
       <h2 className="text-2xl font-bold mb-6">Ваша корзина</h2>
 
-      <div className="flex gap-4 w-full justify-between">
+      <div className="flex gap-4 w-full justify-between items-start">
         <CartList items={cart} />
         <CartTotal
           countProducts={cart.length}

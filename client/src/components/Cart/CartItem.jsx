@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -18,13 +19,17 @@ export default function CartItem({ item }) {
   return (
     <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow mb-4">
       <div className="flex items-center space-x-4">
-        <img
-          src={baseUrl + product.imageUrl}
-          alt={product.name}
-          className="w-20 h-20 object-cover rounded-lg"
-        />
+        <Link to={`/catalog/${item._id}`}>
+          <img
+            src={baseUrl + product.imageUrl}
+            alt={product.name}
+            className="w-20 h-20 object-cover rounded-lg"
+          />
+        </Link>
         <div>
-          <h3 className="text-lg font-semibold">{product.name}</h3>
+          <Link to={`/catalog/${item._id}`} className="text-lg font-semibold">
+            {product.name}
+          </Link>
           <p className="text-sm text-gray-500">{product.brand}</p>
           <p className="text-sm text-gray-700 mt-1">
             Цена: <span className="font-medium">{product.price} ₽</span>
