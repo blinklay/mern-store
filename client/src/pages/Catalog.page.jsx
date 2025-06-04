@@ -28,7 +28,6 @@ const defaultFilterSetting = {
 
 export default function CatalogPage() {
   useHelmet("Каталог");
-
   const { data, loading, error, getData } = useAxios(initialData);
   const [sort, setSort] = useLocalStorage("sort", sortOptions[0]);
   const [filterSettings, setFilterSetting] = useLocalStorage(
