@@ -23,7 +23,7 @@ export default function CartItem({ item }) {
           <img
             src={baseUrl + product.imageUrl}
             alt={product.name}
-            className="w-20 h-20 object-cover rounded-lg"
+            className="w-20 h-20 object-contain rounded-lg"
           />
         </Link>
         <div>

@@ -1,5 +1,7 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
+import CitySelector from "./CitySelector";
+const VITE_DELIVERY_API_URL = import.meta.env.VITE_DELIVERY_API_URL;
 export default function OrderModal({ isOpen = true, onClose }) {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -7,6 +9,15 @@ export default function OrderModal({ isOpen = true, onClose }) {
     phone: "",
     city: "",
   });
+  const [data, setData] = useState([]);
+  const [loading, setLoadig] = useState(false);
+  useEffect(() => {
+    setLoadig(true);
+    axios
+      .get(VITE_DELIVERY_API_URL + "/cities")
+      .then((res) => setData(res.data.cities))
+      .finally(() => setLoadig(false));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,7 +76,7 @@ export default function OrderModal({ isOpen = true, onClose }) {
               className="w-full border rounded px-3 py-2"
             />
           </div>
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium mb-1">Город</label>
             <input
               type="text"
@@ -75,7 +86,8 @@ export default function OrderModal({ isOpen = true, onClose }) {
               required
               className="w-full border rounded px-3 py-2"
             />
-          </div>
+          </div> */}
+          <CitySelector cities={data} loading={loading} />
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
