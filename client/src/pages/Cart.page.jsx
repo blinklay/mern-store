@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import CartList from "../components/Cart/CartList";
 import CartTotal from "../components/Cart/CartTotal";
 import useHelmet from "../hooks/useHelmet";
+import OrderModal from "../components/OrderModal/OrderModal";
+import { useState } from "react";
 
 function calculatePrice(cart) {
   return cart.reduce((sum, item) => {
@@ -11,7 +13,7 @@ function calculatePrice(cart) {
 
 export default function CartPage() {
   useHelmet("Корзина");
-
+  const [modalOpen, setModalOpen] = useState(false);
   const cart = useSelector((state) => state.user.user.cart);
 
   if (!cart || cart.length === 0) {
@@ -25,6 +27,7 @@ export default function CartPage() {
 
   return (
     <div className="mt-10">
+      <OrderModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
       <h2 className="text-2xl font-bold mb-6">Ваша корзина</h2>
 
       <div className="flex gap-4 w-full justify-between items-start">
@@ -32,6 +35,7 @@ export default function CartPage() {
         <CartTotal
           countProducts={cart.length}
           totalPrice={calculatePrice(cart)}
+          setModalOpen={setModalOpen}
         />
       </div>
     </div>
