@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAxios } from "../hooks/useAxios";
 import ProductList from "../components/ProductList/ProductList";
 import Loader from "../components/Catalog/Loader";
@@ -7,6 +7,7 @@ import CatalogSort from "../components/Catalog/CatalogSort/CatalogSort";
 import useLocalStorage from "../hooks/useLoadlStorage";
 import Sidebar from "../components/Catalog/Sidebar";
 import useHelmet from "../hooks/useHelmet";
+import Pagination from "../components/Pagination";
 
 const initialData = {
   page: 1,
@@ -36,15 +37,20 @@ export default function CatalogPage() {
   );
   const categories = [...new Set(data.products.map((item) => item.category))];
   const brands = [...new Set(data.products.map((item) => item.brand))];
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     getData(
-      `/products?sort=${sort.value}&brand=${filterSettings.brand}&category=${filterSettings.category}`
+      `/products?sort=${sort.value}&brand=${filterSettings.brand}&category=${filterSettings.category}&page=${page}`
     );
-  }, [sort, filterSettings]);
+  }, [sort, filterSettings, page]);
 
   if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error} />;
+
+  function onPageChange(page) {
+    setPage(page);
+  }
 
   return (
     <>
@@ -61,6 +67,12 @@ export default function CatalogPage() {
           />
           <ProductList items={data.products} />
         </div>
+
+        <Pagination
+          currentPage={page}
+          totalPages={data.totalPages}
+          onPageChange={onPageChange}
+        />
       </div>
     </>
   );
