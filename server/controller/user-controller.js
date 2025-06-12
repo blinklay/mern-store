@@ -42,7 +42,7 @@ class UserController {
         return res.status(400).json({ message: "Имя пользователя или пароль не верны!" })
       }
 
-      const accessToken = jwt.sign({ id: user._id }, process.env.JWT_ACCESS_SECRET, { expiresIn: "30m" })
+      const accessToken = jwt.sign({ id: user._id, name: user.name }, process.env.JWT_ACCESS_SECRET, { expiresIn: "30m" })
 
       res.cookie("accessToken", accessToken, {
         maxAge: 30 * 60 * 1000,

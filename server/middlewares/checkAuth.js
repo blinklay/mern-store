@@ -9,6 +9,7 @@ function checkAuth(req, res, next) {
 
     const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET)
     req.userId = decoded.id;
+    req.userName = decoded.name;
     next()
   } catch (error) {
     console.log(error);

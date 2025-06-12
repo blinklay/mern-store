@@ -11,6 +11,7 @@ router.get("/auth/me", checkAuth, userController.getSelf)
 
 router.get("/products", productController.getProducts)
 router.get("/products/:productId", productController.getCurrentProduct)
+router.post("/products/review/:productId", checkAuth, productController.addCommentToProduct)
 router.post("/cart/:productId", checkAuth, userController.addToCart)
 router.delete("/cart/:productId", checkAuth, userController.removeFromCart)
 
