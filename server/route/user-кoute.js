@@ -5,5 +5,8 @@ const userController = require("../controllers/user-controller");
 const userRoute = new Router()
 
 userRoute.get("/all", authMiddleware, expressAsyncHandler(userController.getUsers))
+userRoute.get("/cart", authMiddleware, expressAsyncHandler(userController.getCart))
+userRoute.post("/cart/add/:slug", authMiddleware, expressAsyncHandler(userController.addToCart))
+userRoute.post("/cart/remove/:slug", authMiddleware, expressAsyncHandler(userController.removeFromCart))
 
 module.exports = userRoute;

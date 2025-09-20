@@ -9,6 +9,6 @@ authRoute.post("/register", [
   body("password").isLength({ min: 6, max: 20 }).withMessage("Пароль должен быть от 6 до 20 символов")
 ], asyncHandler(authController.register))
 authRoute.post("/login", asyncHandler(authController.login))
-authRoute.post("/logout", asyncHandler(authController.logout))
+authRoute.post("/logout", authController.logout)
 
 module.exports = authRoute;

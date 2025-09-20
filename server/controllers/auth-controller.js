@@ -44,7 +44,7 @@ class AuthController {
 
   logout(req, res) {
     res.clearCookie("accessToken", { httpOnly: true, })
-    res.status(204)
+    res.status(204).json({ message: "Вы вышли из аккаунта!" })
   }
 }
 
