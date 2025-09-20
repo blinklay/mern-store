@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import DangerMessage from "../DangerMessage";
+import SubmitButton from "../SubmitButton";
 
-export default function RegisterForm({ formData, handleSubmit, handleChange }) {
+export default function RegisterForm({
+  formData,
+  handleSubmit,
+  handleChange,
+  error,
+  loading,
+}) {
   return (
     <form
       onSubmit={handleSubmit}
@@ -35,18 +43,14 @@ export default function RegisterForm({ formData, handleSubmit, handleChange }) {
           />
         </label>
       </div>
-      <button
-        type="submit"
-        className="w-full bg-black text-white py-2 px-4 rounded hover:bg-gray-500 focus:bg-gray-500 transition"
-      >
-        Регистрация
-      </button>
+      <SubmitButton loading={loading}>Регистрация!</SubmitButton>
       <div className="flex text-sm mt-4 gap-2 ">
         Есть аккаунт?
         <Link to="/login" className="text-blue-400 underline">
           Войти!
         </Link>
       </div>
+      {error && <DangerMessage>{error.message}</DangerMessage>}
     </form>
   );
 }

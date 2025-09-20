@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { userSelect } from "../../feuters/user/user-select";
 export default function UserNav() {
+  const { isAuth } = useSelector(userSelect);
+
   return (
     <ul className="flex space-x-6 text uppercase p-4 text-xl">
       <li>
@@ -10,7 +14,10 @@ export default function UserNav() {
         </Link>
       </li>
       <li>
-        <Link to="/login" className="hover:text-gray-300 transition-colors">
+        <Link
+          to={isAuth ? `/account` : "/login"}
+          className="hover:text-gray-300 transition-colors"
+        >
           <FaUser />
         </Link>
       </li>

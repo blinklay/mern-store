@@ -1,10 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RegisterForm from "../components/RegisterFrom/RegisterFrom";
+import { useDispatch, useSelector } from "react-redux";
+import { userSelect } from "../feuters/user/user-select";
+import { register } from "../feuters/user/user-thunk";
+import { useNavigate } from "react-router-dom";
 
 const initialformData = { email: "", password: "" };
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState(initialformData);
+  const dispatch = useDispatch();
+  const { error, loading, isAuth } = useSelector(userSelect);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/");
+    }
+  }, [isAuth]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -15,7 +28,7 @@ export default function RegisterPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    dispatch(register(formData));
     setFormData(initialformData);
   };
 
@@ -26,6 +39,8 @@ export default function RegisterPage() {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         formData={formData}
+        error={error}
+        loading={loading}
       />
     </>
   );

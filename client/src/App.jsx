@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
 import Header from "./components/Header/Header";
+import AccountPage from "./pages/AccountPage";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/account" element={<AccountPage />} />
         </Routes>
       </main>
       <footer></footer>

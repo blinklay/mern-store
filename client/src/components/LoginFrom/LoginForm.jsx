@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import DangerMessage from "../DangerMessage";
+import SubmitButton from "../SubmitButton";
 
-export default function LoginForm({ formData, handleSubmit, handleChange }) {
+export default function LoginForm({
+  formData,
+  handleSubmit,
+  handleChange,
+  error,
+  loading,
+}) {
   return (
     <form
       onSubmit={handleSubmit}
@@ -11,6 +19,7 @@ export default function LoginForm({ formData, handleSubmit, handleChange }) {
         <label className="block text-gray-700 mb-2">
           Почта:
           <input
+            disabled={loading}
             onChange={handleChange}
             value={formData.email}
             placeholder="exaple@mail.org"
@@ -25,6 +34,7 @@ export default function LoginForm({ formData, handleSubmit, handleChange }) {
         <label className="block text-gray-700 mb-2">
           Пароль:
           <input
+            disabled={loading}
             value={formData.password}
             onChange={handleChange}
             placeholder="********"
@@ -35,18 +45,15 @@ export default function LoginForm({ formData, handleSubmit, handleChange }) {
           />
         </label>
       </div>
-      <button
-        type="submit"
-        className="w-full bg-black text-white py-2 px-4 rounded hover:bg-gray-500 focus:bg-gray-500 transition"
-      >
-        Войти
-      </button>
+      <SubmitButton loading={loading}>Войти</SubmitButton>
       <div className="flex text-sm mt-4 gap-2 ">
         Нет аккаунта?
         <Link to="/register" className="text-blue-400 underline">
           Регистрация!
         </Link>
       </div>
+
+      {error && <DangerMessage>{error.message}</DangerMessage>}
     </form>
   );
 }
