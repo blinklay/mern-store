@@ -1,10 +1,10 @@
 import React from "react";
 import Spinner from "./Spinner";
 
-export default function SubmitButton({ children, loading }) {
+export default function SubmitButton({ children, loading, disabled }) {
   return (
     <button
-      disabled={loading}
+      disabled={loading || disabled}
       type="submit"
       className="w-full bg-black text-white py-2 px-4 rounded hover:bg-gray-500 focus:bg-gray-500 transition disabled:opacity-[0.5]"
     >

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ProductService } from "../services/ProductService";
 import ProductList from "../components/ProductList/ProductList";
 import Spinner from "../components/Spinner";
+import PageLoader from "../components/PageLoader";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -26,9 +27,7 @@ export default function ProductsPage() {
 
   if (loading) {
     return (
-      <div className="flex gap-2 items-center justify-center text-xl">
-        <Spinner color={"black"} /> Загрузка...
-      </div>
+      <PageLoader/>
     );
   }
 
