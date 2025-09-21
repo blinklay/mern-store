@@ -3,10 +3,25 @@ import Variants from "./Variants";
 import SubmitButton from "../SubmitButton";
 import Tabs from "./Tabs";
 import ProductGallery from "./ProductGallery";
+import { useDispatch, useSelector } from "react-redux";
+import { userSelect } from "../../feuters/user/user-select";
+import { MODAL_TYPES, openModal } from "../../feuters/modal/modal-slice";
 
 export default function CurrentProduct({ product }) {
   const { title, price, currency, variants, tabs, images, isActive } = product;
   const [currentVariant, setCurrentVariant] = useState(null);
+  const { isAuth } = useSelector(userSelect);
+  const dispatch = useDispatch();
+
+  const addToCart = () => {
+    if (!isAuth) {
+      dispatch(
+        openModal({ content: "Войдите в аккаунт!", type: MODAL_TYPES.DANGER })
+      );
+      return;
+    }
+  };
+
   return (
     <div className="flex gap-2 justify-between">
       <ProductGallery images={images} />
@@ -21,7 +36,7 @@ export default function CurrentProduct({ product }) {
           setCurrentVariant={setCurrentVariant}
         />
         <div className="max-w-[300px]">
-          <SubmitButton disabled={!isActive}>
+          <SubmitButton onClick={addToCart} disabled={!isActive}>
             {isActive ? "В корзину" : "Недоступно"}
           </SubmitButton>
         </div>

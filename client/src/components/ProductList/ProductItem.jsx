@@ -1,12 +1,25 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { userSelect } from "../../feuters/user/user-select";
+import { MODAL_TYPES, openModal } from "../../feuters/modal/modal-slice";
 
 export default function ProductItem({ product }) {
   const { title, brand, price, currency, images, slug } = product;
   const primaryImage = images.find((i) => i.isPrimary);
+  const { isAuth } = useSelector(userSelect);
+  const dispatch = useDispatch();
 
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+
+  const handleCart = () => {
+    if (!isAuth) {
+      dispatch(
+        openModal({ content: "Войдите в аккаунт!", type: MODAL_TYPES.DANGER })
+      );
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
@@ -46,7 +59,10 @@ export default function ProductItem({ product }) {
           <span className="text-gray-500 font-bold text-lg">
             {price} {currency}
           </span>
-          <button className="bg-black text-white px-3 py-1 rounded hover:bg-gray-800 transition">
+          <button
+            onClick={handleCart}
+            className="bg-black text-white px-3 py-1 rounded hover:bg-gray-800 transition"
+          >
             В корзину
           </button>
         </div>
