@@ -25,10 +25,10 @@ class UserController {
       { _id: req.user.id, "cart.product": product._id, "cart.variant": variant },
       { $inc: { "cart.$.count": count } },
       { new: true }
-    ).lean()
+    ).populate("cart.product").lean()
 
     if (incRes) {
-      return res.status(200).json({ user: incRes })
+      return res.status(200).json({ cart: incRes.cart })
     }
 
     const pushRes = await userModel.findOneAndUpdate({ _id: req.user.id }, {
@@ -40,8 +40,8 @@ class UserController {
           priceAtAdd: product.price,
         }
       }
-    }, { new: true }).lean()
-    res.status(200).json({ user: pushRes })
+    }, { new: true }).populate("cart.product").lean()
+    res.status(200).json({ cart: pushRes.cart })
   }
 
   async removeFromCart(req, res) {
@@ -72,11 +72,11 @@ class UserController {
         userId,
         { $pull: { cart: { product: product._id, variant } } },
         { new: true, projection: { password: 0 } }
-      ).lean();
+      ).populate("cart.product").lean();
 
       return res.status(200).json({
         message: "Позиция удалена из корзины",
-        user: updated,
+        cart: updated.cart,
       });
     }
 
@@ -84,7 +84,7 @@ class UserController {
       { _id: userId, "cart.product": product._id, "cart.variant": variant },
       { $inc: { "cart.$.count": -count } },
       { new: true, projection: { password: 0 } }
-    ).lean();
+    ).populate("cart.product").lean();
 
     if (!updated) {
       throw createHttpError(404, "Позиция не найдена");
@@ -92,7 +92,7 @@ class UserController {
 
     return res.status(200).json({
       message: `Количество уменьшено на ${count}`,
-      user: updated,
+      cart: updated.cart,
     });
   }
 

@@ -9,6 +9,7 @@ import CartPage from "./pages/CartPage";
 import Header from "./components/Header/Header";
 import AccountPage from "./pages/AccountPage";
 import GlobalModal from "./components/GlobalModal";
+import AuthRoute from "./components/AuthRoute";
 
 export default function App() {
   return (
@@ -22,7 +23,9 @@ export default function App() {
             <Route path="/products/:slug" element={<CurrentProductPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/cart" element={<CartPage />} />
+            <Route element={<AuthRoute />}>
+              <Route path="/cart" element={<CartPage />} />
+            </Route>
             <Route path="/account" element={<AccountPage />} />
           </Routes>
         </main>
