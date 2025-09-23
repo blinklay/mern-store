@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { userSelect } from "../feuters/user/user-select";
 import { login } from "../feuters/user/user-thunk";
 import { useNavigate } from "react-router-dom";
-import { MODAL_TYPES, openModal } from "../feuters/modal/modal-slice";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -15,12 +14,6 @@ export default function LoginPage() {
   useEffect(() => {
     if (isAuth) {
       navigate("/");
-      dispatch(
-        openModal({
-          content: "Успешная авторизация!",
-          type: MODAL_TYPES.SUCCESS,
-        })
-      );
     }
   }, [isAuth]);
 

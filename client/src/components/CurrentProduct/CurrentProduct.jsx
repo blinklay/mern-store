@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Variants from "./Variants";
 import SubmitButton from "../SubmitButton";
 import Tabs from "./Tabs";
@@ -14,11 +14,7 @@ export default function CurrentProduct({ product }) {
   const [currentVariant, setCurrentVariant] = useState(null);
   const { isAuth } = useSelector(userSelect);
   const dispatch = useDispatch();
-  const { loading, error } = useSelector(cartSelect);
-
-  useEffect(() => {
-    dispatch(openModal({ content: error.message, type: MODAL_TYPES.DANGER }));
-  }, [error]);
+  const { loading } = useSelector(cartSelect);
 
   const handleCart = () => {
     if (!isAuth) {
@@ -37,12 +33,6 @@ export default function CurrentProduct({ product }) {
 
     dispatch(
       addToCart({ slug: product.slug, variant: currentVariant, count: 1 })
-    );
-    dispatch(
-      openModal({
-        content: "Товар добавлен в корзину!",
-        type: MODAL_TYPES.SUCCESS,
-      })
     );
   };
 

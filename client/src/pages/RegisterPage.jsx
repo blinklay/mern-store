@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { userSelect } from "../feuters/user/user-select";
 import { register } from "../feuters/user/user-thunk";
 import { useNavigate } from "react-router-dom";
-import { MODAL_TYPES, openModal } from "../feuters/modal/modal-slice";
 
 const initialformData = { email: "", password: "" };
 
@@ -17,12 +16,6 @@ export default function RegisterPage() {
   useEffect(() => {
     if (isAuth) {
       navigate("/");
-      dispatch(
-        openModal({
-          content: "Успешная регистрация!",
-          type: MODAL_TYPES.SUCCESS,
-        })
-      );
     }
   }, [isAuth]);
 

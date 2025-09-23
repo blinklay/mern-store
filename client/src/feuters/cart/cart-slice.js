@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addToCart, fetchCart } from "./cart-thunk";
+import { addToCart, fetchCart, removeFromCart } from "./cart-thunk";
 
 const setPending = (state) => {
   state.loading = true;
@@ -27,7 +27,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   extraReducers: (builder) => {
-    [fetchCart, addToCart].forEach((thunk) => {
+    [fetchCart, addToCart, removeFromCart].forEach((thunk) => {
       builder
         .addCase(thunk.pending, setPending)
         .addCase(thunk.fulfilled, setFulfilled)

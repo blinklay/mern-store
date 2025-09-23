@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cartSelect } from "../feuters/cart/cart-select";
-import { addToCart, fetchCart } from "../feuters/cart/cart-thunk";
+import { fetchCart } from "../feuters/cart/cart-thunk";
 import PageLoader from "../components/PageLoader";
 import { MODAL_TYPES, openModal } from "../feuters/modal/modal-slice";
 import CartTable from "../components/Cart/CartTable";
@@ -20,10 +20,6 @@ export default function CartPage() {
     }
   }, [error]);
 
-  const handleAddToCart = (slug, variant) => {
-    dispatch(addToCart({ slug, variant, count: 1 }));
-  };
-
   if (loading) return <PageLoader />;
   if (products.length === 0 || !products) {
     return (
@@ -32,7 +28,7 @@ export default function CartPage() {
   }
   return (
     <div>
-      <CartTable cart={products} handleAddToCart={handleAddToCart} />
+      <CartTable cart={products} />
     </div>
   );
 }

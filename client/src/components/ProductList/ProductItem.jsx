@@ -10,19 +10,12 @@ export default function ProductItem({ product }) {
   const { title, brand, price, currency, images, slug, variants } = product;
   const primaryImage = images.find((i) => i.isPrimary);
   const { isAuth } = useSelector(userSelect);
-  const { loading: addCartLoading, error: addCartError } =
-    useSelector(cartSelect);
+  const { loading: addCartLoading } = useSelector(cartSelect);
   const dispatch = useDispatch();
   const defaultVariant = variants.filter((v) => v.stock > 0)[0].size;
 
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-
-  if (addCartError) {
-    dispatch(
-      openModal({ content: addCartError.message, type: MODAL_TYPES.DANGER })
-    );
-  }
 
   const handleCart = () => {
     if (!isAuth) {
@@ -31,12 +24,6 @@ export default function ProductItem({ product }) {
       );
     }
     dispatch(addToCart({ slug, variant: defaultVariant, count: 1 }));
-    dispatch(
-      openModal({
-        content: "Товар добавлен в корзину!",
-        type: MODAL_TYPES.SUCCESS,
-      })
-    );
   };
 
   return (

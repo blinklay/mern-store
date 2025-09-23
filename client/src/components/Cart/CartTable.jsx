@@ -1,7 +1,7 @@
 import React from "react";
 import CartRow from "./CartRow";
 
-export default function CartTable({ cart, handleAddToCart }) {
+export default function CartTable({ cart }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full border-collapse text-sm">
@@ -19,7 +19,7 @@ export default function CartTable({ cart, handleAddToCart }) {
 
         <tbody className="align-middle">
           {cart.map((p) => (
-            <CartRow key={p.variant} {...p} handleAddToCart={handleAddToCart} />
+            <CartRow key={p.variant} {...p} />
           ))}
         </tbody>
       </table>
