@@ -20,7 +20,7 @@ class AuthController {
     const user = await userModel.create({ email, password: hashPassword })
     const userDto = new UserDto(user)
     const token = jwt.sign({ ...userDto }, process.env.JWT_ACCESS_KEY, { expiresIn: "30d" })
-    res.cookie("accessToken", token)
+    res.cookie("accessToken", token, { maxAge: 30 * 24 * 60 * 60 * 1000 }) //30d
     res.status(200).json({ token, user: { ...userDto } })
   }
 

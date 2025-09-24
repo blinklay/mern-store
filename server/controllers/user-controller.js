@@ -3,6 +3,19 @@ const productModel = require("../models/product-model");
 const userModel = require("../models/user-model");
 
 class UserController {
+  async getSelf(req, res) {
+    if (!req.user) {
+      throw createHttpError(401, "Не авторизован!");
+    }
+
+    const user = await userModel.findById(req.user.id).select("-password");
+    if (!user) {
+      throw createHttpError(404, "Пользователь не найден");
+    }
+
+    return res.status(200).json({ user });
+  }
+
   async getUsers(req, res) {
     const users = await userModel.find()
     res.status(200).json({ users })
