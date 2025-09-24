@@ -18,6 +18,9 @@ export default function ProductsPage() {
         const res = await ProductService.fetchProducts();
         setProducts(res.data.products);
       } catch (err) {
+        if (err.code === "ERR_NETWORK") {
+          return setError(err);
+        }
         setError(err.response?.data || "Ошибка при получении товаров!");
       } finally {
         setLoading(false);

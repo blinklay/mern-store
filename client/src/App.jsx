@@ -12,6 +12,7 @@ import GlobalModal from "./components/GlobalModal";
 import AuthRoute from "./components/AuthRoute";
 import { useDispatch } from "react-redux";
 import { getSelf } from "./feuters/user/user-thunk";
+import AboutPage from "./pages/AboutPage";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ export default function App() {
               <Route path="/cart" element={<CartPage />} />
             </Route>
             <Route path="/account" element={<AccountPage />} />
+            <Route path="/about" element={<AboutPage />} />
           </Routes>
         </main>
         <footer></footer>
