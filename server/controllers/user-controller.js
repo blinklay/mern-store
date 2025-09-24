@@ -1,14 +1,23 @@
 const createHttpError = require("http-errors");
 const productModel = require("../models/product-model");
 const userModel = require("../models/user-model");
+const jwt = require("jsonwebtoken");
 
 class UserController {
   async getSelf(req, res) {
-    if (!req.user) {
-      throw createHttpError(401, "Не авторизован!");
+    const token = req.cookies.accessToken;
+    if (!token) {
+      return res.status(200).json({ user: null })
     }
 
-    const user = await userModel.findById(req.user.id).select("-password");
+    let payload;
+    try {
+      payload = jwt.verify(token, process.env.JWT_ACCESS_KEY);
+    } catch (err) {
+      return res.status(200).json({ user: null });
+    }
+
+    const user = await userModel.findById(payload.id).select("-password");
     if (!user) {
       throw createHttpError(404, "Пользователь не найден");
     }

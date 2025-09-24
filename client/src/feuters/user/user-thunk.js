@@ -1,6 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AuthService } from "../../services/AuthService";
 import { MODAL_TYPES, openModal } from "../modal/modal-slice";
+import { UserService } from "../../services/UserService";
+
+export const getSelf = createAsyncThunk(
+  "user/self",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await UserService.getSelf()
+      return res.data
+    } catch (err) {
+      rejectWithValue(err.response?.data)
+    }
+  }
+)
 
 export const login = createAsyncThunk(
   "user/login",

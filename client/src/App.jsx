@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
@@ -10,8 +10,14 @@ import Header from "./components/Header/Header";
 import AccountPage from "./pages/AccountPage";
 import GlobalModal from "./components/GlobalModal";
 import AuthRoute from "./components/AuthRoute";
+import { useDispatch } from "react-redux";
+import { getSelf } from "./feuters/user/user-thunk";
 
 export default function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getSelf());
+  }, []);
   return (
     <>
       <div className="max-w-[1420px] mx-auto px-3">
