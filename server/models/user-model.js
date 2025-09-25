@@ -14,6 +14,9 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   cart: { type: [cartItemSchema], default: [] },
+  orders: [
+    { type: Schema.Types.ObjectId, ref: "Order" }
+  ]
 }, { timestamps: true })
 
 userSchema.virtual("cartItemsCount").get(function () {
