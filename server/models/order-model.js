@@ -5,7 +5,7 @@ const orderPositionSchema = new Schema(
     product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
     title: { type: String, required: true },
     image: { type: String },
-    sku: { type: String },
+    slug: { type: String },
     variant: { type: String, trim: true, default: null },
     count: { type: Number, required: true, min: 1, default: 1 },
     priceAtPurchase: { type: Number, required: true, min: 0 },
@@ -33,7 +33,7 @@ const orderSchema = new Schema(
       carrier: { type: String, default: null },
     },
 
-    status: { type: String, enum: ["processing", "delivery", "delivered", "canceled"], default: "processing", index: true },
+    status: { type: String, enum: ["В обработке", "Доставляется", "Доставлен", "Отменен"], default: "В обработке", index: true },
 
     payment: {
       method: { type: String, enum: ["card"], default: "card" },
@@ -49,9 +49,7 @@ const orderSchema = new Schema(
       discount: { type: Number, required: true, min: 0, default: 0 },
       total: { type: Number, required: true, min: 0 },
       currency: { type: String, enum: ["RUB", "USD", "EUR"], default: "RUB" },
-    },
-
-    comment: { type: String, trim: true },
+    }
   },
   { timestamps: true, collection: "orders" }
 );
